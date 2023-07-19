@@ -12,6 +12,7 @@ namespace DapperASPNetCore.Contracts
 		public Task<IEnumerable<Manager>> GetManagers();
 		public Task<Manager> GetManager(int id);
 		public Task<Manager> CreateManager(ManagerForCreationDto manager);
-		
+		public Task UpdateManager(int id, ManagerForCreationDto manger);
+		public Task DeleteManager(int id);
 	}
 }

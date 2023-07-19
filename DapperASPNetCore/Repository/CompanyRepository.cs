@@ -128,7 +128,7 @@ namespace DapperASPNetCore.Repository
 
         public async Task<List<Company>> GetCompaniesEmployeesMultipleMapping()
         {
-            var query = "SELECT * FROM Companies c JOIN Employees e ON c.Id = e.CompanyId Left Join Managers m ON c.Id = m.CompanyId";
+            var query = "SELECT * FROM Companies c JOIN Employees e ON c.Id = e.CompanyId LEFT JOIN dbo.Managers m ON c.Id = m.CompanyId";
 
             using (var connection = _context.CreateConnection())
             {
@@ -143,11 +143,12 @@ namespace DapperASPNetCore.Repository
                             companyDict.Add(currentCompany.Id, currentCompany);
                         }
 
-                        currentCompany.Employees.Add(employee);
-                        if (!currentCompany.Managers.Contains(manager))
+                        if (currentCompany.Managers.FirstOrDefault(m => m.Id.Equals(manager.Id)) == null)
                         {
                             currentCompany.Managers.Add(manager);
                         }
+
+                        currentCompany.Employees.Add(employee);
                         return currentCompany;
                     }
                 );

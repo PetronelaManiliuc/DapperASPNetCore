@@ -59,7 +59,7 @@ namespace DapperASPNetCore.Repository
             {
                 var id = await connection.QuerySingleAsync<int>(query, parameters);
 
-                var createdCompany = new Manager
+                var createdManager = new Manager
                 {
                     Id = id,
                     Name = manager.Name,
@@ -69,7 +69,35 @@ namespace DapperASPNetCore.Repository
                     Age = manager.Age
                 };
 
-                return createdCompany;
+                return createdManager;
+            }
+        }
+
+        public async Task UpdateManager(int id, ManagerForCreationDto manager)
+        {
+            var query = "UPDATE Managers SET Name = @Name, Age = @Age, Email = @Email, Phone = @Phone, CompanyId = @CompanyId WHERE Id = @Id";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", id, DbType.Int32);
+            parameters.Add("Name", manager.Name, DbType.String);
+            parameters.Add("Age", manager.Age, DbType.String);
+            parameters.Add("Email", manager.Email, DbType.String);
+            parameters.Add("Phone", manager.Phone, DbType.String);
+            parameters.Add("CompanyId", manager.CompanyId, DbType.String);
+
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
+
+        public async Task DeleteManager(int id)
+        {
+            var query = "DELETE FROM Managers WHERE Id = @Id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, new { id });
             }
         }
     }
