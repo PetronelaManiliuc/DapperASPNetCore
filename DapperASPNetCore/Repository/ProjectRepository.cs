@@ -1,11 +1,8 @@
 ﻿using Dapper;
 using DapperASPNetCore.Context;
 using DapperASPNetCore.Contracts;
-using DapperASPNetCore.Dto;
 using DapperASPNetCore.Entities;
-using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,9 +17,14 @@ namespace DapperASPNetCore.Repository
             _context = context;
         }
 
+        public Task<IEnumerable<Project>> GetEmployeesProject(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<IEnumerable<Project>> GetProjects()
         {
-            var query = "SELECT Id, Title, Description, Phase, ManagerId FROM Projects";
+            var query = "SELECT Id, Title, Description, Phase As Status, ManagerId FROM Projects";
 
             using (var connection = _context.CreateConnection())
             {

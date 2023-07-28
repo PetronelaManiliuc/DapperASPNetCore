@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DapperASPNetCore.Entities
+﻿namespace DapperASPNetCore.Entities
 {
-	public class EmployeeProject
+    public class EmployeeProject
 	{
 		public int EmployeeId { get; set; }
 	

@@ -1,15 +1,13 @@
 ﻿using DapperASPNetCore.Contracts;
 using DapperASPNetCore.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DapperASPNetCore.Controllers
 {
-	[Route("api/companies")]
+    [Route("api/companies")]
 	[ApiController]
 	public class CompaniesController : ControllerBase
 	{

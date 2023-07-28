@@ -43,6 +43,16 @@ namespace DapperASPNetCore.Repository
             }
         }
 
+        //public async Task<Manager> GetManagerwithDependencies(int id)
+        //{
+        //    var query = "SELECT * FROM Managers m Join Employees e on  m.Id = e.ManagerId Left Join Projects p on m.Id = p.ManagerId WHERE m.Id = @Id";
+
+        //    using (var connection = _context.CreateConnection())
+        //    {
+        //        var managerDict = new Dictionary<int, Manager>();
+        //    }
+        //}
+
         public async Task<Manager> CreateManager(ManagerForCreationDto manager)
         {
             var query = "INSERT INTO Managers (Name, Age, Email, Phone, CompanyId) VALUES (@Name, @Age, @Email, @Phone, @CompanyId)" +
@@ -93,11 +103,30 @@ namespace DapperASPNetCore.Repository
 
         public async Task DeleteManager(int id)
         {
-            var query = "DELETE FROM Managers WHERE Id = @Id";
-
             using (var connection = _context.CreateConnection())
             {
-                await connection.ExecuteAsync(query, new { id });
+                var q1 = "Delete From Projects Where ManagerId = @Id";
+                var q2 = "Delete From Employees Where ManagerId = @Id";
+
+                var query = "DELETE FROM Managers WHERE Id = @Id";
+                connection.Open();
+                IDbTransaction transaction = null;
+                try
+                {
+                    using (transaction = connection.BeginTransaction())
+                    {
+                        var parameters = new DynamicParameters();
+                        parameters.Add("Id", id, DbType.Int32);
+                        await connection.ExecuteAsync(q1, parameters, transaction: transaction);
+                        await connection.ExecuteAsync(q2, parameters, transaction: transaction);
+                        await connection.ExecuteAsync(query, parameters, transaction: transaction);
+                        transaction.Commit();
+                    }
+                }
+                catch(Exception ex) {
+                    transaction.Rollback();
+                }
+                //   await connection.ExecuteAsync(query, new { id });
             }
         }
     }
