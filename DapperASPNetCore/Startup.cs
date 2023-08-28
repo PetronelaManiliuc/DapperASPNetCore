@@ -20,6 +20,7 @@ namespace DapperASPNetCore
 
         public void ConfigureServices(IServiceCollection services)
         {
+           services.AddCors();
             services.AddSingleton<DapperContext>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IManagerRepository, ManagerRepository>();
@@ -28,7 +29,7 @@ namespace DapperASPNetCore
             services.AddControllers();
 
             services.AddSwaggerGen();
-        }
+                }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -37,12 +38,12 @@ namespace DapperASPNetCore
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
-                {
-                  //  c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
-                });
+                { });
             }
-
+                      
             app.UseHttpsRedirection();
+
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseRouting();
 
@@ -52,6 +53,7 @@ namespace DapperASPNetCore
             {
                 endpoints.MapControllers();
             });
+                   
         }
     }
 }

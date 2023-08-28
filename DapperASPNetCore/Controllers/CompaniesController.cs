@@ -1,5 +1,6 @@
 ﻿using DapperASPNetCore.Contracts;
 using DapperASPNetCore.Dto;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace DapperASPNetCore.Controllers
 {
     [Route("api/companies")]
+//	[EnableCors("AllowOrigin")]
 	[ApiController]
 	public class CompaniesController : ControllerBase
 	{

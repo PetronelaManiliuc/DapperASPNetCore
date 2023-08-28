@@ -1,0 +1,20 @@
+<div class="container mt-3">
+    <div class="row mt-2 justify-content-center">
+        <h2>Companies</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="list-group col-sm-10 mt-2" *ngFor="let company of companies">
+                <a role="button" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="mb-1">{{ company.name }}</h5>
+                    </div>
+                </a>
+                <button class="btn btn-danger">Remove</button>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
