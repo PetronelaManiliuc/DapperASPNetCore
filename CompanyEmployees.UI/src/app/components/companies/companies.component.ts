@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CompanyResponse } from 'src/app/models/company.request';
+import { CompanyResponse } from 'src/app/models/company.response';
 import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
@@ -12,10 +13,9 @@ export class CompaniesComponent implements OnInit {
 
   companies: CompanyResponse[] = [];
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private companyService: CompanyService, private router: Router) { }
 
   ngOnInit(): void {
-    console.log("here");
     this.companyService.getCompanies().subscribe({
       next: (companies) => {
         this.companies = companies;
@@ -24,8 +24,18 @@ export class CompaniesComponent implements OnInit {
         console.log(response);
       }
     });
+  }
 
-    console.log(this.companies);
+  addCompany() {
+    this.router.navigate(['companies/add']);
+  }
+
+  editCompany(id: Int32Array) {
+    this.router.navigate([`companies/detail/${id}`]);
+  }
+
+  deleteCompany(id: Int32Array) {
+
   }
 
 }

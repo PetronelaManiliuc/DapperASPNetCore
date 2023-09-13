@@ -1,20 +1,29 @@
 <div class="container mt-3">
-    <div class="row mt-2 justify-content-center">
+    <div class="container mt-3">
         <h2>Companies</h2>
+        <p>The companies list</p>
+        <button type="button" class="btn btn-primary" (click)="addCompany()">Add company</button>
+        <hr />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Country</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let company of companies">
+                    <td>{{company.name}}</td>
+                    <td>{{company.address}}</td>
+                    <td>{{company.country}}</td>
+                    <td>
+                        <button class="btn btn btn-success btn-sm"  (click)="editCompany(company.id)">Edit</button>
+                        &nbsp;
+                        <button class="btn btn-danger btn-sm"  (click)="deleteCompany(company.id)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
-            <div class="list-group col-sm-10 mt-2" *ngFor="let company of companies">
-                <a role="button" class="list-group-item list-group-item-action">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="mb-1">{{ company.name }}</h5>
-                    </div>
-                </a>
-                <button class="btn btn-danger">Remove</button>
-            </div>
-        </div>
-        <div class="col-sm-2"></div>
-    </div>
-</div>

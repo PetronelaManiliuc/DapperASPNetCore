@@ -68,16 +68,16 @@ namespace DapperASPNetCore.Controllers
 			}
 		}
 
-		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateCompany(int id, CompanyForUpdateDto company)
+		[HttpPut]
+		public async Task<IActionResult> UpdateCompany(CompanyForUpdateDto company)
 		{
 			try
 			{
-				var dbCompany = await _companyRepo.GetCompany(id);
+				var dbCompany = await _companyRepo.GetCompany(company.Id);
 				if (dbCompany == null)
 					return NotFound();
 
-				await _companyRepo.UpdateCompany(id, company);
+				await _companyRepo.UpdateCompany(company);
 				return NoContent();
 			}
 			catch (Exception ex)

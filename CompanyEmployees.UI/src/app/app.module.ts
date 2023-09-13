@@ -9,6 +9,8 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { ManagersComponent } from './components/managers/managers.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CompanyDetailComponent } from './components/company-detail/company-detail.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,13 +18,15 @@ import { HttpClientModule } from '@angular/common/http';
     ProjectsComponent,
     CompaniesComponent,
     EmployeesComponent,
-    ManagersComponent
+    ManagersComponent,
+    CompanyDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

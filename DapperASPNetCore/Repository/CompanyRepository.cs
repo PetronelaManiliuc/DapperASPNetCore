@@ -68,12 +68,12 @@ namespace DapperASPNetCore.Repository
             }
         }
 
-        public async Task UpdateCompany(int id, CompanyForUpdateDto company)
+        public async Task UpdateCompany( CompanyForUpdateDto company)
         {
             var query = "UPDATE Companies SET Name = @Name, Address = @Address, Country = @Country WHERE Id = @Id";
 
             var parameters = new DynamicParameters();
-            parameters.Add("Id", id, DbType.Int32);
+            parameters.Add("Id", company.Id, DbType.Int32);
             parameters.Add("Name", company.Name, DbType.String);
             parameters.Add("Address", company.Address, DbType.String);
             parameters.Add("Country", company.Country, DbType.String);
