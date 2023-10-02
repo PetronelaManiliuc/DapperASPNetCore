@@ -36,4 +36,9 @@ export class CompanyService {
     );
   }
 
+  deleteCompany(id: Number) {
+    console.log(id);
+    this.httpClient.delete(`${environment.apiUrl}/companies/`+ id).subscribe(() => console.log("company deleted"));
+  }
+
 }

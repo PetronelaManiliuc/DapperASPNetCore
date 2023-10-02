@@ -1,5 +1,5 @@
 export interface CompanyResponse {
-    id: Int32Array;
+    id: Number;
     name: string; 
     address: string;
     country: string;

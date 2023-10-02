@@ -1,0 +1,29 @@
+<mat-dialog-content>
+	<p>
+		{{message}}
+	</p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+	<button class="btn btn btn-success btn-sm" mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+	<button class="btn btn-danger btn-sm"   mat-raised-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>
+
+
+<!-- <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+       
+        <div class="modal-body">
+            {{message}}
+        </div>
+  
+      
+        <div class="modal-footer">
+            <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+            <button mat-raised-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+        </div>
+  
+      </div>
+    </div>
+  </div> -->
