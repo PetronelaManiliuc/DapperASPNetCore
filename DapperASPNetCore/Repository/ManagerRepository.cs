@@ -43,6 +43,19 @@ namespace DapperASPNetCore.Repository
             }
         }
 
+
+        public async Task<IEnumerable<Manager>> GetManagersByCompanyId(int companyId)
+        {
+            var query = "SELECT * FROM Managers WHERE CompanyID = @CompanyId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var manager = await connection.QueryAsync<Manager>(query, new { companyId });
+
+                return manager.ToList();
+            }
+        }
+
         //public async Task<Manager> GetManagerwithDependencies(int id)
         //{
         //    var query = "SELECT * FROM Managers m Join Employees e on  m.Id = e.ManagerId Left Join Projects p on m.Id = p.ManagerId WHERE m.Id = @Id";

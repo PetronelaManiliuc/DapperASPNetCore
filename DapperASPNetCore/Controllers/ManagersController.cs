@@ -32,16 +32,13 @@ namespace DapperASPNetCore.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "ManagerById")]
-        public async Task<IActionResult> GetManager(int id)
+        [HttpGet("{companyId}", Name = "ManagerByCompanyId")]
+        public async Task<IActionResult> GetManagers(int companyId)
         {
             try
             {
-                var manager = await _managerRepo.GetManager(id);
-                if (manager == null)
-                    return NotFound();
-
-                return Ok(manager);
+                var managers = await _managerRepo.GetManagersByCompanyId(companyId);
+                return Ok(managers);
             }
             catch (Exception ex)
             {
@@ -49,6 +46,24 @@ namespace DapperASPNetCore.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        //[HttpGet("{id}", Name = "ManagerById")]
+        //public async Task<IActionResult> GetManager(int id)
+        //{
+        //    try
+        //    {
+        //        var manager = await _managerRepo.GetManager(id);
+        //        if (manager == null)
+        //            return NotFound();
+
+        //        return Ok(manager);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //log error
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> CreateManager(ManagerForCreationDto manager)

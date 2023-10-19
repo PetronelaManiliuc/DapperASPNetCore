@@ -1,1 +1,33 @@
-<p>employees works!</p>
+<div class="container mt-3">
+    <div class="container mt-3">
+        <h2>Employees</h2>
+        <p>The employee list</p>
+        <button type="button" class="btn btn-primary" (click)="add()">Add employee</button>
+        <hr />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Position</th>
+                    <th>ManagerName</th>
+                    <th>CompanyName</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employees">
+                    <td>{{employee.name}}</td>
+                    <td>{{employee.age}}</td>
+                    <td>{{employee.position}}</td>
+                    <td>{{employee.managerName}}</td>
+                    <td>{{employee.companyName}}</td>
+                    <td>
+                        <button class="btn btn btn-success btn-sm" (click)="edit(employee.id)">Edit</button>
+                        &nbsp;
+                        <button class="btn btn-danger btn-sm" (click)="openDialog(employee.id)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

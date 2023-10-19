@@ -5,6 +5,7 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { ManagersComponent } from './components/managers/managers.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { CompanyDetailComponent } from './components/company-detail/company-detail.component';
+import { EmployeeDetailComponent } from './components/employee-detail/employee-detail.component';
 
 const routes: Routes = [
   { path: 'companies', component: CompaniesComponent },
@@ -13,6 +14,8 @@ const routes: Routes = [
   { path: 'projects', component: ProjectsComponent },
   { path: 'companies/detail/:id', component: CompanyDetailComponent },
   { path: 'companies/add', component: CompanyDetailComponent },
+  { path: 'employees/detail/:id', component: EmployeeDetailComponent },
+  { path: 'employees/add', component: EmployeeDetailComponent },
   { path: '', redirectTo: 'companies', pathMatch: 'full' }
 ];
 

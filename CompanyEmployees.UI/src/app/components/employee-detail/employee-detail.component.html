@@ -1,0 +1,103 @@
+<div class="container">
+    <h2>Employees</h2>
+    <p>Add new employee</p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-md-offset-2 col-sm-offset-1">
+            <form [formGroup]="EmployeeDetailsForm" (ngSubmit)="onSubmit()">
+                <hr />
+                <div>
+                    <div class="form-group">
+                        <label for="name">Employee Name</label>
+                        <input type="text" id="name" name="name" formControlName="name" required minlength="1"
+                            maxlength="60" class="form-control form-control-sm"
+                            [class.is-invalid]="name!.invalid && (name!.dirty || name!.touched)">
+                        <div *ngIf="name!.invalid && (name!.dirty || name!.touched)" class="invalid-feedback">
+                            <div *ngIf="name!.errors?.['required']">
+                                This field is required.
+                            </div>
+                            <span *ngIf="name!.errors?.['minlength']">
+                                This field must have at least 1 character.
+                            </span>
+                            <span *ngIf="name!.errors?.['maxlength']">
+                                This field must have at most 60 characters.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <input type="text" id="position" name="position" formControlName="position" required
+                            minlength="1" maxlength="60" class="form-control form-control-sm"
+                            [class.is-invalid]="position!.invalid && (position!.dirty || position!.touched)">
+                        <div *ngIf="position!.invalid && (position!.dirty || position!.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="position!.errors?.['required']">
+                                This field is required.
+                            </div>
+                            <span *ngIf="position!.errors?.['minlength']">
+                                This field must have at least 1 character.
+                            </span>
+                            <span *ngIf="position!.errors?.['maxlength']">
+                                This field must have at most 60 characters.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" formControlName="age" required
+                            class="form-control form-control-sm"
+                            [class.is-invalid]="age!.invalid && (age!.dirty || age!.touched)">
+                        <div *ngIf="age!.invalid && (age!.dirty || age!.touched)" class="invalid-feedback">
+                            <div *ngIf="age!.errors?.['required']">
+                                This field is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <select class="form-select custom-select mb-3" (change)="changeCompany($event)"
+                            formControlName="companyId">
+                            <option value="">Choose</option>
+                            <option *ngFor="let company of Companies" [value]="company.id"
+                                (selected)="company.id == selectedCompany">
+                                {{ company.name }}
+                            </option>
+                        </select>
+                    
+                        <div class="invalid-feedback" *ngIf="submitted ">
+                            <sup>*</sup>Please provide company name
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="manager">Manager</label>
+                        <select class="form-select custom-select mb-3" (change)="changeManger($event)"
+                            formControlName="managerId">
+                            <option value="">Choose</option>
+                            <option *ngFor="let manager of Managers" [value]="manager.id"
+                                (selected)="manager.id == selectedManager">
+                                {{ manager.name }}
+                            </option>
+                        </select>
+                    
+                        <div class="invalid-feedback" *ngIf="submitted ">
+                            <sup>*</sup>Please provide manager name
+                        </div>
+                    </div>
+
+                    <span class="help-block" *ngIf="!EmployeeDetailsForm.valid && EmployeeDetailsForm.touched">
+                        please enter valid data
+                    </span>
+                </div>
+
+
+                <hr />
+
+                <button class="btn btn-primary" type="submit"
+                    [disabled]="!EmployeeDetailsForm.valid ? 'disabled': '' ">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

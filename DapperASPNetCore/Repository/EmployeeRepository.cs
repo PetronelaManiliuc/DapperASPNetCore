@@ -73,11 +73,29 @@ namespace DapperASPNetCore.Repository
 
         public async Task<IEnumerable<Employee>> GetEmployees()
         {
-            var query = "SELECT * FROM Employees " ;
+            var test = GetEmployeesAndDependencies();
+            var query = "SELECT * FROM Employees ";
 
             using (var connection = _context.CreateConnection())
             {
                 var employees = await connection.QueryAsync<Employee>(query);
+                return employees.ToList();
+            }
+        }
+
+        public async Task<IEnumerable<EmployeeDto>> GetEmployeesAndDependencies()
+        {
+            var query = "SELECT e.Id, e.Name, e.Position, e.Age, m.Name As ManagerName, c.Name as CompanyName " +
+                            "FROM Employees AS e " +
+                            "LEFT JOIN Managers AS m " +
+                            "ON e.ManagerId = m.Id " +
+                            "LEFT JOIN Companies AS c " +
+                            "ON e.CompanyId = c.Id ";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var employees = await connection.QueryAsync<EmployeeDto>(query);
+                var test = employees.ToList(); ;
                 return employees.ToList();
             }
         }
@@ -88,15 +106,15 @@ namespace DapperASPNetCore.Repository
             throw new System.NotImplementedException();
         }
 
-        public async Task UpdateEmployee(int id, EmployeeForCreationDto employee)
+        public async Task UpdateEmployee(EmployeeDtoForUpdate employee)
         {
             var query = "UPDATE Employees SET Name = @Name, Age = @Age, Position = @Position, @CompanyId = CompanyId, ManagerId = @ManagerId  WHERE Id = @Id";
             //Employees(Name, Age, Position, CompanyId, ManagerId) VALUES(@Name, @Age, @Position, @CompanyId, @ManagerId)" +
 
             var parameters = new DynamicParameters();
-            parameters.Add("Id", id, DbType.Int32);
+            parameters.Add("Id", employee.Id, DbType.Int32);
             parameters.Add("Name", employee.Name, DbType.String);
-            parameters.Add("Age",   employee.Age, DbType.String);
+            parameters.Add("Age", employee.Age, DbType.String);
             parameters.Add("Position", employee.Position, DbType.String);
             parameters.Add("CompanyId", employee.CompanyId, DbType.String);
             parameters.Add("ManagerId", employee.ManagerId, DbType.String);
