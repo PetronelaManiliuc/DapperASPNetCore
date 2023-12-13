@@ -1,1 +1,50 @@
-<p>projects works!</p>
+<div class="container mt-3">
+    <div class="container mt-3">
+        <h2>Projects</h2>
+        <p>The project list</p>
+        <button type="button" class="btn btn-primary" (click)="add()">Add project</button>
+        <hr />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>ManagerName</th>
+
+                    <th></th>
+                    <td></td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let project of projects">
+                    <td>{{project.title}}</td>
+                    <td>{{project.description}}</td>
+                    <td>{{project.status}}</td>
+                    <td>{{project.managerName}}</td>
+                    <td>
+                        <button class="btn btn btn-success btn-sm" (click)="addEmployee(project.id)">Asign employee
+                            <i class="mdi mdi-{{isEditItems ? 'close' : 'pencil'}} mdi-18px"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn btn-success btn-sm" (click)="edit(project.id)">Edit</button>
+                        &nbsp;
+                        <button class="btn btn-danger btn-sm" (click)="openDialog(project.id)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+        <table>
+            <tbody *ngIf="isEditItems">
+                <tr>
+                    <td>
+                        demo
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
+    </div>

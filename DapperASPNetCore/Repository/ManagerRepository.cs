@@ -43,7 +43,6 @@ namespace DapperASPNetCore.Repository
             }
         }
 
-
         public async Task<IEnumerable<Manager>> GetManagersByCompanyId(int companyId)
         {
             var query = "SELECT * FROM Managers WHERE CompanyID = @CompanyId";

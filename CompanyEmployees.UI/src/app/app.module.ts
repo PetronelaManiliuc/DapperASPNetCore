@@ -17,6 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeDetailComponent } from './components/employee-detail/employee-detail.component';
+import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EmployeeDetailComponent } from './components/employee-detail/employee-d
     ManagersComponent,
     CompanyDetailComponent,
     ConfirmDialogComponent,
-    EmployeeDetailComponent
+    EmployeeDetailComponent,
+    ProjectDetailComponent
   ],
   imports: [
     BrowserModule,

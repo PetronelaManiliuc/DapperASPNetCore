@@ -52,7 +52,7 @@ export class EmployeesComponent implements OnInit {
         console.log(confirmed);
 
         this.deleteEmployee(id);
-      //  window.location.reload();
+        window.location.reload();
       }
     });
   }

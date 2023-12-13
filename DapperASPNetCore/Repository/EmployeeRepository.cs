@@ -95,7 +95,7 @@ namespace DapperASPNetCore.Repository
             using (var connection = _context.CreateConnection())
             {
                 var employees = await connection.QueryAsync<EmployeeDto>(query);
-                var test = employees.ToList(); ;
+              
                 return employees.ToList();
             }
         }
