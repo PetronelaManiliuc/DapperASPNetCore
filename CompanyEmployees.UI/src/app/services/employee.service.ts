@@ -47,4 +47,10 @@ export class EmployeeService {
     return this.httpClient.get<EmployeeRequest>(`${environment.apiUrl}/managers/${companyId}`);
   }
 
+  assignToProject(employees: any) {
+    console.log(employees);
+    return this.httpClient.get<EmployeeRequest>(`${environment.apiUrl}/managers/1}`);
+    //   return this.httpClient.get<EmployeeRequest>(`${environment.apiUrl}/managers/}`);
+  }
+
 }

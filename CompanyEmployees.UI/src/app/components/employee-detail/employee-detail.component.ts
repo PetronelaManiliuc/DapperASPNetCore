@@ -123,7 +123,6 @@ export class EmployeeDetailComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    console.log(this.EmployeeDetailsForm.value);
     const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     if (Number.isNaN(id)) {
       this.addEmployee();

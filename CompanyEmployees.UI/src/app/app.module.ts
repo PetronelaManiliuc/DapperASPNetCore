@@ -18,6 +18,9 @@ import {BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeDetailComponent } from './components/employee-detail/employee-detail.component';
 import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
+import { AssignEmployeeDialogComponent } from './components/assign-employee-dialog/assign-employee-dialog.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgSelectModule } from "@ng-select/ng-select"; 
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { ProjectDetailComponent } from './components/project-detail/project-deta
     CompanyDetailComponent,
     ConfirmDialogComponent,
     EmployeeDetailComponent,
-    ProjectDetailComponent
+    ProjectDetailComponent,
+    AssignEmployeeDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,9 @@ import { ProjectDetailComponent } from './components/project-detail/project-deta
     MatDialogModule,
     MatSnackBarModule, 
     BrowserAnimationsModule,
-    NoopAnimationsModule 
+    NoopAnimationsModule ,
+    NgMultiSelectDropDownModule.forRoot(),
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

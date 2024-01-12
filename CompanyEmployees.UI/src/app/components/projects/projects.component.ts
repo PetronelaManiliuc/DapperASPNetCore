@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { ProjectResponse } from 'src/app/models/project.response';
 import { ProjectService } from 'src/app/services/project.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AssignEmployeeDialogComponent } from '../assign-employee-dialog/assign-employee-dialog.component';
+import { EmployeeService } from 'src/app/services/employee.service';
+import { EmployeeResponse } from 'src/app/models/employee.response';
 
 @Component({
   selector: 'app-projects',
@@ -14,9 +17,10 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 export class ProjectsComponent implements OnInit {
 
   projects: ProjectResponse[] = [];
+  employees: EmployeeResponse[] = [];
   isEditItems: boolean = false;
 
-  constructor(private projectService: ProjectService, private router: Router, private dialog: MatDialog) { }
+  constructor(private projectService: ProjectService, private employeeService: EmployeeService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.projectService.getProjects().subscribe({
@@ -27,6 +31,10 @@ export class ProjectsComponent implements OnInit {
         console.log(response);
       }
     });
+
+    this.getEmployees();
+
+    // console.log(this.employees)
   }
 
   edit(id: Number): void {
@@ -62,8 +70,31 @@ export class ProjectsComponent implements OnInit {
     this.projectService.deleteProject(id);
   }
 
+  getEmployees() {
+    this.employeeService.getEmployees().subscribe({
+      next: (employees) => {
+        this.employees = employees;
+      }, error: (response) => {
+        console.log(response);
+      }
+    });
+  }
+
   addEmployee(id: Number) {
-    this.isEditItems = !this.isEditItems;
+
+    const dialogRef = this.dialog.open(AssignEmployeeDialogComponent, {
+      data: {
+        employees: this.employees,
+        companyId: id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+
+        window.location.reload();
+      }
+    });
   }
 
 }
