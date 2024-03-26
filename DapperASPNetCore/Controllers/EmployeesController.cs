@@ -2,6 +2,7 @@
 using DapperASPNetCore.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DapperASPNetCore.Controllers
@@ -51,20 +52,20 @@ namespace DapperASPNetCore.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateEmployee(EmployeeForCreationDto employee)
-        {
-            try
-            {
-                var createdCompany = await _employeesRepo.CreateEmployee(employee);
-                return CreatedAtRoute("EmployeeById", new { id = createdCompany.Id }, createdCompany);
-            }
-            catch (Exception ex)
-            {
-                //log error
-                return StatusCode(500, ex.Message);
-            }
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateEmployee(EmployeeForCreationDto employee)
+        //{
+        //    try
+        //    {
+        //        var createdCompany = await _employeesRepo.CreateEmployee(employee);
+        //        return CreatedAtRoute("EmployeeById", new { id = createdCompany.Id }, createdCompany);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //log error
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
 
         [HttpPut]
         public async Task<IActionResult> UpdateCompany(EmployeeDtoForUpdate employee)
@@ -111,6 +112,21 @@ namespace DapperASPNetCore.Controllers
             {
                 var employees = await _employeesRepo.GetEmployees();
                 return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                //log error
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("assignEmployeeToCompany")]
+        public async Task<IActionResult> AssignEmployee(List<Entities.EmployeeProject> employeeIDs)
+        {
+            try
+            {
+                await _employeesRepo.AssignEmployeeToProject(employeeIDs);
+                return NoContent();
             }
             catch (Exception ex)
             {

@@ -85,7 +85,7 @@ export class ProjectsComponent implements OnInit {
     const dialogRef = this.dialog.open(AssignEmployeeDialogComponent, {
       data: {
         employees: this.employees,
-        companyId: id
+        projectId: id
       }
     });
 

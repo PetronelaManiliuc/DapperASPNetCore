@@ -15,17 +15,19 @@ export class AssignEmployeeDialogComponent {
   selectedItems: any[] = [];
   dropdownSettings: IDropdownSettings = {};
   dropDownForm!: FormGroup;
-  public loadContent: boolean = false;
+  projectId = 0;
 
   constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) private data: any,
-    private employeeService: EmployeeService) {
+    private employeeService: EmployeeService, private dialogRef: MatDialogRef<AssignEmployeeDialogComponent>) {
     if (data) {
+
       data.employees.forEach((obj: any) => {
         this.dropdownList.push({ item_id: obj.id, item_text: obj.name });
-
-        if (obj.companyId == data.companyId) {
-          this.selectedItems.push({ item_id: obj.id, item_text: obj.name });
-        }
+        this.projectId = data.projectId;
+        //  console.log(obj);
+        // if (this.projectId == 6) {
+        //   this.selectedItems.push({ item_id: obj.id, item_text: obj.name });
+        // }
       });
 
       this.dropDownForm = this.fb.group({
@@ -41,11 +43,9 @@ export class AssignEmployeeDialogComponent {
     };
 
     this.setForm();
-    this.loadContent = true;
   }
 
   public setForm() {
-
     this.dropDownForm = new FormGroup({
       name: new FormControl(this.dropdownList, Validators.required),
     });
@@ -57,14 +57,13 @@ export class AssignEmployeeDialogComponent {
   }
 
   public save() {
-    // console.log(this.selectedItems);
+
     if (this.dropDownForm.invalid) {
       this.dropDownForm.markAllAsTouched();
       return;
     }
+
     this.assignEmployee();
-    // console.log(this.dropDownForm);
-    // console.log(this.dropDownForm.value);
   }
 
   public resetForm() {
@@ -72,163 +71,48 @@ export class AssignEmployeeDialogComponent {
     this.setForm();
   }
 
-  public onFilterChange(item: any) {
-    console.log(item);
-  }
-  public onDropDownClose(item: any) {
-    console.log(item);
-  }
-
   public onItemSelect(item: any) {
-    this.selectedItems.push(item.name);
+    this.selectedItems.push({ item_id: item.item_id, item_text: item.item_text });
     console.log(item);
   }
   public onDeSelect(item: any) {
-    console.log(item);
+    // this.selectedItems.pop();
+    this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
+    // console.log(item);
   }
 
   public onSelectAll(items: any) {
-    console.log(items);
+    items.forEach((i: any) => {
+      this.selectedItems.push({ item_id: i.item_id, item_text: i.item_text });
+    });
   }
+
   public onDeSelectAll(items: any) {
     console.log(items);
+    items.forEach((i: any) => {
+      this.selectedItems.splice(this.selectedItems.indexOf(i), 1);
+    });
   }
 
   assignEmployee(): void {
-    this.employeeService.assignToProject(this.dropDownForm.value).subscribe({
+    var newEmployeeProject: { employeeId: any; projectId: number; }[] = [];
+
+    this.selectedItems.forEach((obj: any) => {
+      console.log(obj);
+      newEmployeeProject.push({ employeeId: obj.item_id, projectId: this.projectId });
+    });
+
+    this.employeeService.assignToProject(newEmployeeProject).subscribe({
       next: (data) => {
         console.log(`assign successfully ${data}`);
         return;
+
       },
       error: (error: any) => {
         console.log(error);
       },
     });
+    this.dialogRef.close(true);
   }
-  // @ViewChild('multiSelect') multiSelect: any;
-  // formGroup!: FormGroup;
-  // loadContent: boolean = false;
-  // name = '';
-  // dropdownList: { item_id: number; item_text: string }[] = [];
-  // settings = {};
-  // // selectedItems = [];
-  // selectedItems: { name: string }[] = [];
 
-  // constructor(@Inject(MAT_DIALOG_DATA) private data: any,
-  //   private dialogRef: MatDialogRef<AssignEmployeeDialogComponent>) {
-  //   if (data) {
-  //     data.employees.forEach((obj: any) => {
-  //       this.dropdownList.push({ item_id: obj.id, item_text: obj.name });
-
-  //       // if (obj.companyId == data.companyId) {
-  //       //   this.selectedItems.push(obj.name);
-  //       // }
-  //     });
-  //   }
-
-  //   this.settings = {
-  //     singleSelection: false,
-  //     idField: 'item_id',
-  //     textField: 'item_text',
-  //     enableCheckAll: true,
-  //     selectAllText: 'Select all',
-  //     unSelectAllText: 'Reset',
-  //     allowSearchFilter: true,
-  //     limitSelection: -1,
-  //     clearSearchFilter: true,
-  //     maxHeight: 197,
-  //     itemsShowLimit: 3,
-  //     searchPlaceholderText: 'Search employee',
-  //     noDataAvailablePlaceholderText: 'no data',
-  //     closeDropDownOnSelection: false,
-  //     showSelectedItemsAtTop: false,
-  //     defaultOpen: false,
-  //   };
-
-  //   this.setForm();
-  // }
-
-  // // ngOnInit(): void {
-  // //   this.data = [
-  // //     { item_id: 1, item_text: 'Hanoi' },
-  // //     { item_id: 2, item_text: 'Lang Son' },
-  // //     { item_id: 3, item_text: 'Vung Tau' },
-  // //     { item_id: 4, item_text: 'Hue' },
-  // //     { item_id: 5, item_text: 'Cu Chi' },
-  // //   ];
-
-  // //   this.settings = {
-  // //     singleSelection: false,
-  // //     idField: 'item_id',
-  // //     textField: 'item_text',
-  // //     enableCheckAll: true,
-  // //     selectAllText: 'Select all',
-  // //     unSelectAllText: 'Reset',
-  // //     allowSearchFilter: true,
-  // //     limitSelection: -1,
-  // //     clearSearchFilter: true,
-  // //     maxHeight: 197,
-  // //     itemsShowLimit: 3,
-  // //     searchPlaceholderText: 'Search employee',
-  // //     noDataAvailablePlaceholderText: 'no data',
-  // //     closeDropDownOnSelection: false,
-  // //     showSelectedItemsAtTop: false,
-  // //     defaultOpen: false,
-  // //   };
-
-  // //   this.setForm();
-  // // }
-
-  // onConfirmClick(): void {
-  //   this.dialogRef.close(true);
-  // }
-
-  // public setForm() {
-  //   console.log(this.dropdownList);
-  //   this.formGroup = new FormGroup({
-  //     name: new FormControl(this.dropdownList, Validators.required),
-  //   });
-  //   this.loadContent = true;
-  // }
-
-  // get f() {
-  //   return this.formGroup.controls;
-  // }
-
-  // public save() {
-  //   if (this.formGroup.invalid) {
-  //     this.formGroup.markAllAsTouched();
-  //     return;
-  //   }
-  //   console.log(this.formGroup.value);
-  // }
-
-  // public resetForm() {
-  //   // beacuse i need select all crickter by default when i click on reset button.
-  //   this.setForm();
-  //   this.multiSelect.toggleSelectAll();
-  //   // i try below variable isAllItemsSelected reference from your  repository but still not working
-  //   // this.multiSelect.isAllItemsSelected = true;
-  // }
-
-  // public onFilterChange(item: any) {
-  //   console.log(item);
-  // }
-  // public onDropDownClose(item: any) {
-  //   console.log(item);
-  // }
-
-  // public onItemSelect(item: any) {
-  //   console.log(item);
-  // }
-  // public onDeSelect(item: any) {
-  //   console.log(item);
-  // }
-
-  // public onSelectAll(items: any) {
-  //   console.log(items);
-  // }
-  // public onDeSelectAll(items: any) {
-  //   console.log(items);
-  // }
 }

@@ -19,6 +19,40 @@ namespace DapperASPNetCore.Repository
             _context = context;
         }
 
+        public async Task AssignEmployeeToProject(IEnumerable<EmployeeProject> employees)
+        {
+            using (var connection = _context.CreateConnection())
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    string sql = "insert into EmployeeProject (EmployeeId, ProjectId) values(@EmployeeId, @ProjectId)";
+                    var existingEmployees = GetProjectEmployees(employees.FirstOrDefault().ProjectId);
+                    foreach (var a in employees)
+                    {
+                        var isExistingEmployee = existingEmployees.Result.Select(a => a.EmployeeId).Contains(a.EmployeeId);
+                        if (!isExistingEmployee)
+                        {
+                            var item = await connection.ExecuteAsync(sql, new { EmployeeId = a.EmployeeId, ProjectId = a.ProjectId }, transaction);
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+            }
+        }
+        private async Task<IEnumerable<EmployeeProject>> GetProjectEmployees(int projectId)
+        {
+            var query = "SELECT * FROM EmployeeProject WHERE ProjectId = @ProjectId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var pairs = await connection.QueryAsync<EmployeeProject>(query, new { projectId });
+
+                return pairs.ToList();
+            }
+        }
+
         public async Task<Employee> CreateEmployee(EmployeeForCreationDto employee)
         {
             var query = "INSERT INTO Employees (Name, Age, Position, CompanyId, ManagerId) VALUES (@Name, @Age, @Position, @CompanyId, @ManagerId)" +
@@ -95,7 +129,7 @@ namespace DapperASPNetCore.Repository
             using (var connection = _context.CreateConnection())
             {
                 var employees = await connection.QueryAsync<EmployeeDto>(query);
-              
+
                 return employees.ToList();
             }
         }

@@ -1,37 +1,17 @@
 <mat-dialog-content>
     <div class="container" style="min-width: 250px;; min-height: 200px;">
         <form [formGroup]="dropDownForm" (ngSubmit)="save()" (reset)="resetForm()">
-            <ng-multiselect-dropdown [placeholder]="'Select Employee'" [settings]="dropdownSettings"  [formControl]="f['name']" 
-                [data]="dropdownList" formControlName="myItems" (onFilterChange)="onFilterChange($event)"
-                (onDropDownClose)="onDropDownClose($event)" (onSelect)="onItemSelect($event)"
-                (onDeSelect)="onDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+            <ng-multiselect-dropdown [settings]="dropdownSettings" [(ngModel)]="this.selectedItems"
+                [data]="dropdownList" [placeholder]="'Select Employee'" formControlName="myItems"
+                (onSelect)="onItemSelect($event)" (onDeSelect)="onDeSelect($event)" (onSelectAll)="onSelectAll($event)"
                 (onDeSelectAll)="onDeSelectAll($event)">
             </ng-multiselect-dropdown>
+
             <br />
             <hr />
             <input type="submit" value="Submit"> | <input type="reset" value="Reset"> |
             <button class="btn btn-danger btn-sm" mat-raised-button mat-dialog-close tabindex="-1">Cancel</button>
         </form>
-        <!-- <form [formGroup]="formGroup" (ngSubmit)="save()" (reset)="resetForm()">
 
-            <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Employee'" [data]="dropdownList"
-                [formControl]="f['name']" [settings]="settings" [disabled]="false"
-                [class.is-invalid]="f['name']['errors']!=null  && f['name']['touched']"
-                (onFilterChange)="onFilterChange($event)" (onDropDownClose)="onDropDownClose($event)"
-                (onSelect)="onItemSelect($event)" (onDeSelect)="onDeSelect($event)" (onSelectAll)="onSelectAll($event)"
-                (onDeSelectAll)="onDeSelectAll($event)">
-            </ng-multiselect-dropdown>
-
-            <span *ngIf="f['name']['errors']!=null  && f['name']['touched']" style="color: red;">
-                Employee is required
-            </span>
-
-            <br /> <br />
-
-            <input type="submit" value="Submit"> | <input type="reset" value="Reset"> | <input type="button"
-                value="Toggle Select All" (click)="multiSelect.toggleSelectAll()"> | 
-                <button class="btn btn-danger btn-sm" mat-raised-button mat-dialog-close tabindex="-1">Cancel</button>
-
-        </form> -->
     </div>
 </mat-dialog-content>

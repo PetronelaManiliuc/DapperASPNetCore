@@ -49,7 +49,7 @@ export class EmployeeService {
 
   assignToProject(employees: any) {
     console.log(employees);
-    return this.httpClient.get<EmployeeRequest>(`${environment.apiUrl}/managers/1}`);
+    return this.httpClient.post<EmployeeRequest>(`${environment.apiUrl}/employees/assignEmployeeToCompany`, employees);
     //   return this.httpClient.get<EmployeeRequest>(`${environment.apiUrl}/managers/}`);
   }
 

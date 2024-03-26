@@ -14,6 +14,7 @@ namespace DapperASPNetCore.Contracts
         public Task UpdateEmployee( EmployeeDtoForUpdate employee);
         public Task DeleteEmployee(int id);
         public Task<IEnumerable<Employee>> GetEmployeesAndProjects();
+        public Task AssignEmployeeToProject(IEnumerable<EmployeeProject> employees);
 
     }
 }
